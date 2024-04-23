@@ -128,8 +128,20 @@ public class Model {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
-
-
+        int n = b.size();
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (b.tile(i, j) == null) return true;
+                if (i + 1 < n) {
+                    if (b.tile(i+1, j) == null ||
+                            b.tile(i+1, j).value() == b.tile(i, j).value()) return true;
+                }
+                if (j + 1 < n) {
+                    if (b.tile(i, j+1) == null ||
+                            b.tile(i, j+1).value() == b.tile(i, j).value()) return true;
+                }
+            }
+        }
         return false;
     }
 
