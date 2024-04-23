@@ -160,9 +160,34 @@ public class Model {
     public void tilt(Side side) {
         // TODO: Modify this.board (and if applicable, this.score) to account
         // for the tilt to the Side SIDE.
-
+        board.setViewingPerspective(side);
+        for (int c = 0; c < board.size(); c++) {
+            tiltColUp(c);
+        }
+        board.setViewingPerspective(Side.NORTH);
 
         checkGameOver();
+    }
+
+    /** Helper Method to tilt a specific column up */
+    public void tiltColUp(int c) {
+        int currNum = 0;
+        int currRow = board.size();
+        for (int r = board.size() - 1; r >= 0; r--) {
+            Tile t = board.tile(c, r);
+            if (t != null) {
+                if (t.value() != currNum) {
+                    board.move(c, currRow - 1, t);
+                    currNum = t.value();
+                    currRow = currRow - 1;
+                }
+                else {
+                    score += 2 * t.value();
+                    board.move(c, currRow, t);
+                    currNum = 0;
+                }
+            }
+        }
     }
 
 
